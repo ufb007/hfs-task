@@ -17,7 +17,7 @@ return new class extends Migration
                 ->index()
                 ->constrained()
                 ->onDelete('cascade');
-            $table->foreignId('comment_id')
+            $table->foreignId('article_id')
                 ->index()
                 ->constrained()
                 ->onDelete('cascade');

@@ -9,12 +9,8 @@ use Illuminate\Http\Request;
 
 class TopicController extends Controller
 {
-    protected $topicService;
-
-    public function __construct(TopicService $topicService)
-    {
-        $this->topicService = $topicService;
-    }
+    public function __construct(protected TopicService $topicService)
+    {}
 
     public function index(Request $request)
     {

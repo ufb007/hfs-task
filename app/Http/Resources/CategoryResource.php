@@ -23,4 +23,21 @@ class CategoryResource extends JsonResource
             'article_count' => $this->articles->count(),
         ];
     }
+
+    /**
+     * Retrieve the resource with associated articles.
+     *
+     * @return array
+     */
+    public function withArticles(): array
+    {
+        return [
+            'id' => $this->id,
+            'topic_id' => $this->topic_id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'created_at' => $this->created_at->diffForHumans(),
+            'articles' => ArticleResource::collection($this->whenLoaded('articles')),
+        ];
+    }
 }

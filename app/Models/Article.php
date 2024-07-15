@@ -12,6 +12,7 @@ class Article extends Model
     use HasSlug;
 
     protected $fillable = ['title', 'slug', 'content'];
+    protected $with = ['comments'];
 
     protected function slugKey(): string
     {
@@ -23,8 +24,13 @@ class Article extends Model
         return $this->title;
     }
 
-    public function caregory()
+    public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

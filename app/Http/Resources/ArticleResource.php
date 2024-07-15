@@ -19,7 +19,19 @@ class ArticleResource extends JsonResource
             'user_id' => $this->user_id,
             'category_id' => $this->category_id,
             'title' => $this->title,
+            'comments_count' => $this->comments->count(),
+        ];
+    }
+
+    public function withComments()
+    {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'category_id' => $this->category_id,
+            'title' => $this->title,
             'content' => $this->content,
+            'comments' => CommentResource::collection($this->whenLoaded('comments')),
         ];
     }
 }

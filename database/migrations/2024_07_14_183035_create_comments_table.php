@@ -15,16 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('article_id')
                 ->index()
-                ->constrained()
-                ->onDelete('cascade');
+                ->nullable();
             $table->foreignId('user_id')
                 ->index()
                 ->constrained()
                 ->onDelete('cascade');
-            $table->foreignId('comment_id')
+            $table->foreignId('parent_id')
                 ->index()
-                ->constrained()
-                ->onDelete('cascade');
+                ->nullable();
             $table->text('content');
             $table->timestamps();
         });

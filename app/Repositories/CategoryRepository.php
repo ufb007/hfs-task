@@ -6,8 +6,8 @@ use App\Models\Category;
 
 class CategoryRepository
 {
-    public function getWithArticles($id)
+    public function getWithArticlesBySlug($slug)
     {
-        return Category::find($id)->get();
+        return Category::where('slug', $slug)->first();
     }
 }
