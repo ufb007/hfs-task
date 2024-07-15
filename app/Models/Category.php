@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    public function topics()
+    {
+        return $this->belongsTo(Topic::class);
+    }
 }

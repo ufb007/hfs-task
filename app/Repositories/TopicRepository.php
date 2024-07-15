@@ -6,10 +6,15 @@ use App\Models\Topic;
 
 class TopicRepository
 {
-    public function all()
+    protected $model;
+
+    public function __construct(Topic $model)
     {
-        return Topic::all();
+        $this->model = $model;
     }
 
-    
+    public function getAllWithCategories()
+    {
+        return $this->model->with('category')->get();
+    }
 }
