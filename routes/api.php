@@ -16,7 +16,9 @@ Route::middleware(AuthenticateWithApiToken::class)->group(function () {
         return $request->user();
     });
 
-    Route::get('/topics', [TopicController::class, 'index'])->name('api.topics');
-    Route::get('/category/{slug}', [CategoryController::class, 'index']);
-    Route::get('/category/{slug}/article/{article_slug}', [ArticleController::class, 'show']);
+    Route::put('/article/{article}', [ArticleController::class, 'update']);
 });
+
+Route::get('/topics', [TopicController::class, 'index'])->name('api.topics');
+Route::get('/category/{category}', [CategoryController::class, 'index']);
+Route::get('/article/{article:slug}', [ArticleController::class, 'show']);

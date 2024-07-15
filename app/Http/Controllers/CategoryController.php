@@ -13,10 +13,9 @@ class CategoryController extends Controller
     public function __construct(protected CategoryService $categoryService)
     {}
 
-    public function index(Request $request, $slug)
+    public function index(Request $request, Category $category)
     {
         $token = $request->attributes->get('token');
-        $category = $this->categoryService->getAllWithArticles($slug);
 
         return response()->json([
             'token' => $token,

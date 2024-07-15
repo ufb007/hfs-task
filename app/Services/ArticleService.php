@@ -8,9 +8,4 @@ class ArticleService
 {
     public function __construct(protected ArticleRepository $articleRepository)
     {}
-
-    public function getArticleWithComments($slug)
-    {
-        return $this->articleRepository->findOne($slug);
-    }
 }

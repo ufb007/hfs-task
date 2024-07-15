@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentResource extends JsonResource
+class VoteResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,9 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'article_id' => $this->article_id,
             'user_id' => $this->user_id,
-            'content' => $this->content,
-            'parent_id' => $this->parent_id,
-            'replies' => CommentResource::collection($this->whenLoaded('replies')),
-            'created_at' => $this->created_at->diffForHumans(),
+            'article_id' => $this->article_id,
+            'vote' => $this->vote
         ];
     }
 }
