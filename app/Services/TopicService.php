@@ -6,9 +6,7 @@ use App\Repositories\TopicRepository;
 
 class TopicService
 {
-    protected $topicRepository;
-
-    public function __construct(TopicRepository $topicRepository)
+    public function __construct(protected TopicRepository $topicRepository)
     {
         $this->topicRepository = $topicRepository;
     }

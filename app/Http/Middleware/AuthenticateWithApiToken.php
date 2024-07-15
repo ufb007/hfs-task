@@ -26,11 +26,20 @@ class AuthenticateWithApiToken
         $accessToken = PersonalAccessToken::findToken($token);
 
         if (!$accessToken || !$accessToken->tokenable) {
-            return response()->json(['message' => 'Unauthorized'], 401);   
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         Auth::login($accessToken->tokenable);
 
-        return $next($request);
+        $user = $accessToken->tokenable;
+        $newToken = $user->createToken('auth-token')->plainTextToken;
+
+        $request->attributes->set('token', $newToken);
+
+        $response = $next($request);
+
+        $response->headers->set('Authorization', 'Bearer ' . $newToken);
+
+        return $response;
     }
 }

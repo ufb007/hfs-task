@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\CategoryService;
 use App\Services\TopicService;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,9 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(TopicService::class, function ($app) {
-            return new TopicService($app->make('App\Repositories\TopicRepository'));
-        });
+        //
     }
 
     /**

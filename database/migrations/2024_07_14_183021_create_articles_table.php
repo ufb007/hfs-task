@@ -22,6 +22,7 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('content');
             $table->timestamps();
         });

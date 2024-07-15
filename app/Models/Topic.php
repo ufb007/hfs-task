@@ -9,7 +9,9 @@ class Topic extends Model
 {
     use HasFactory;
 
-    public function category()
+    protected $with = ['categories'];
+
+    public function categories()
     {
         return $this->hasMany(Category::class);
     }
