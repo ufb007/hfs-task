@@ -7,9 +7,14 @@ use Illuminate\Support\Str;
 
 trait HasSlug
 {
-    public static function bootHasSlug(Model $model): void
+    /**
+     * Boot the HasSlug trait for a model.
+     *
+     * @param Model $model The model instance
+     */
+    protected static function bootHasSlug(): void
     {        
-        static::creating(function(Model $model) {
+        static::creating(function (Model $model) {
             if (!$model->{$model->slugKey()}) {
                 $model->{$model->slugKey()} = static::generateUniqueSlug($model->sluggable());
             }

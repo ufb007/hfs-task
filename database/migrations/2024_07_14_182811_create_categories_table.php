@@ -18,7 +18,7 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade');
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug')->default('')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
         });

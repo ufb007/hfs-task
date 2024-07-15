@@ -42,8 +42,8 @@ class ArticlesTableSeeder extends Seeder
         foreach ($articles as $article) {
             $article['created_at'] = $currentTime;
             $article['updated_at'] = $currentTime;
-        }
 
-        Article::insert($articles);
+            Article::create($article);
+        }
     }
 }

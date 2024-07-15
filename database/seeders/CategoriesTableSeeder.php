@@ -197,8 +197,8 @@ class CategoriesTableSeeder extends Seeder
         foreach($categories as &$category) {
             $category['created_at'] = $currentTime;
             $category['updated_at'] = $currentTime;
-        }
 
-        Category::insert($categories);
+            Category::create($category);
+        }
     }
 }

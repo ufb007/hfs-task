@@ -11,7 +11,7 @@ class Category extends Model
     use HasFactory;
     use HasSlug;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'slug', 'description'];
     protected $with = ['articles'];
 
     protected function slugKey(): string
