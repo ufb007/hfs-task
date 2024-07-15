@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('votes', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
+            $table->foreignId('topic_id')
                 ->index()
                 ->constrained()
                 ->onDelete('cascade');
-            $table->foreignId('comment_id')
-                ->index()
-                ->constrained()
-                ->onDelete('cascade');
-            $table->enum('vote', ['up', 'down']);
+            $table->string('name');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('votes');
+        Schema::dropIfExists('categories');
     }
 };

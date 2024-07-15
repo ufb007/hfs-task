@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('topic_id');
+            $table->foreignId('user_id')
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('category_id')
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
             $table->string('title');
             $table->text('content');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
         });
     }
 

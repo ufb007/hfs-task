@@ -13,15 +13,20 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('article_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('parent_comment_id')->nullable();
+            $table->foreignId('article_id')
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
+            $table->foreignId('comment_id')
+                ->index()
+                ->constrained()
+                ->onDelete('cascade');
             $table->text('content');
             $table->timestamps();
-
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('parent_comment_id')->references('id')->on('comments')->onDelete('cascade');
         });
     }
 
