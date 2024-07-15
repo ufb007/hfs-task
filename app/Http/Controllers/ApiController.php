@@ -14,7 +14,7 @@ class ApiController extends Controller
         ]);
 
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         $user = Auth::user();

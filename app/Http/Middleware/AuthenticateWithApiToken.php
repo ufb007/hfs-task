@@ -20,13 +20,13 @@ class AuthenticateWithApiToken
         $token = $request->bearerToken();
 
         if (!$token) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
         $accessToken = PersonalAccessToken::findToken($token);
 
         if (!$accessToken || !$accessToken->tokenable) {
-            return response()->json(['error' => 'Unauthorized'], 401);   
+            return response()->json(['message' => 'Unauthorized'], 401);   
         }
 
         Auth::login($accessToken->tokenable);
