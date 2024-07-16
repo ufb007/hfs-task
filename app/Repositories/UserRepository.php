@@ -16,12 +16,12 @@ class UserRepository
         return User::find($id);
     }
 
-    public function create(array $data)
+    public function create(array $data): User
     {
         return User::create($data);
     }
 
-    public function update(User $user, array $data)
+    public function update(User $user, array $data): User
     {
         $user->update($data);
         return $user;

@@ -11,7 +11,7 @@ class Article extends Model
     use HasFactory;
     use HasSlug;
 
-    protected $fillable = ['title', 'slug', 'content'];
+    protected $fillable = ['user_id', 'category_id', 'title', 'slug', 'content'];
     protected $with = ['comments', 'votes'];
 
     protected function slugKey(): string

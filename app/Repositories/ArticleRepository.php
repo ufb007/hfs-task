@@ -6,8 +6,14 @@ use App\Models\Article;
 
 class ArticleRepository
 {
-    public function findOne($slug): Article
+    public function create(array $data): Article
     {
-        return Article::where('slug', $slug)->first();
+        return Article::create($data);
+    }
+
+    public function update(Article $article, array $data): Article
+    {
+        $article->fill($data)->save();
+        return $article;
     }
 }

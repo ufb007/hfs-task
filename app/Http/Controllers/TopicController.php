@@ -15,12 +15,8 @@ class TopicController extends Controller
 
     public function index(Request $request)
     {
-        $token = $request->attributes->get('token');
         $topics = Topic::all();
 
-        return response()->json([
-            'token' => $token,
-            'topics' => TopicResource::collection($topics),
-        ]);
+        return response()->json(TopicResource::collection($topics));
     }
 }

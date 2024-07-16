@@ -17,9 +17,6 @@ class CategoryController extends Controller
     {
         $token = $request->attributes->get('token');
 
-        return response()->json([
-            'token' => $token,
-            'category' => (new CategoryResource($category))->withArticles(),
-        ]);
+        return response()->json((new CategoryResource($category))->withArticles());
     }
 }
