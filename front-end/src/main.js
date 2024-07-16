@@ -11,6 +11,9 @@ import "@/assets/styles/tailwind.css";
 import App from "@/App.vue";
 
 // layouts
+import Topics from "@/layouts/Topics.vue";
+
+import Categories from "@/views/topics/Categories.vue";
 
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
@@ -73,6 +76,16 @@ const routes = [
         component: Register,
       },
     ],
+  },
+  {
+    path: '/topics',
+    component: Topics,
+    children: [
+      {
+        path: '/topics/categories',
+        component: Categories
+      }
+    ]
   },
   {
     path: "/landing",

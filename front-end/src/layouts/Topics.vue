@@ -13,5 +13,4 @@
   <script setup>
     import AdminNavbar from "@/components/Navbars/AdminNavbar.vue";
     import HeaderStats from "@/components/Headers/HeaderStats.vue";
-    import FooterAdmin from "@/components/Footers/FooterAdmin.vue";
   </script>

@@ -24,7 +24,7 @@ class ArticleController extends Controller
 
     public function store(CreateArticleRequest $request)
     {
-        $newArticle = $this->articleRepository->create($request->validated());
+        $newArticle = $this->articleRepository->create($request->all());
 
         return response()->json([
             'message' => 'Article created successfully',
@@ -35,7 +35,7 @@ class ArticleController extends Controller
     public function update(UpdateArticleRequest $request, Article $article)
     {
         Gate::authorize('update', $article);
-        $this->articleRepository->update($article, $request->validated());
+        $this->articleRepository->update($article, $request->all());
         
         return response()->json($article);
     }

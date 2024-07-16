@@ -19,7 +19,7 @@ class CommentController extends Controller
 
     public function store(CreateCommentRequest $request)
     {
-        $newComment = $this->commentRepository->create($request->validated());
+        $newComment = $this->commentRepository->create($request->all());
 
         return response()->json([
             'message' => 'Comment created successfully',
@@ -30,7 +30,7 @@ class CommentController extends Controller
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
         Gate::authorize('update', $comment);
-        $this->commentRepository->update($comment, $request->validated());
+        $this->commentRepository->update($comment, $request->all());
         
         return response()->json($comment);
     }

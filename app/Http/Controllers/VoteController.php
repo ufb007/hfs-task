@@ -25,7 +25,7 @@ class VoteController extends Controller
             return response()->json(['error' => 'Unauthorized.'], 403);
         }
 
-        $message = $this->voteService->createUpdateDelete($request->validated());
+        $message = $this->voteService->createUpdateDelete($request->all());
 
         return response()->json(['message' => $message]);
     }

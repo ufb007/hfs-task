@@ -22,7 +22,7 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         try {
-            $this->userRepository->create($request->validated());
+            $this->userRepository->create($request->all());
             return response()->json(['message' => 'User created successfully'], 201);
 
         } catch (\Throwable $th) {
@@ -38,7 +38,7 @@ class UserController extends Controller
         try {
             Gate::authorize('update', $user);
 
-            $editedUser = $this->userRepository->update($user, $request->validated());
+            $editedUser = $this->userRepository->update($user, $request->all());
 
             return response()->json([
                 'message' => 'User updated successfully',
