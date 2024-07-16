@@ -23,6 +23,11 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function store(Request $request, Article $article)
+    {
+        Gate::authorize('create', $article);
+    }
+
     public function update(Request $request, Article $article)
     {
         Gate::authorize('update', $article);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ApiController extends Controller
+class AuthController extends Controller
 {
     public function authenticate(Request $request) {
         $request->validate([
