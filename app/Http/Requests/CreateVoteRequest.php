@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class CreateArticleRequest extends FormRequest
+class CreateVoteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,13 +12,6 @@ class CreateArticleRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'user_id' => Auth::id(),
-        ]);
     }
 
     /**
@@ -30,10 +22,9 @@ class CreateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'category_id' => 'required',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'user_id' => 'required',
+            'article_id' => 'required',
+            'vote' => 'required|in:up,down'
         ];
     }
 }

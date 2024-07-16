@@ -9,6 +9,8 @@ class Vote extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'article_id', 'vote'];
+
     public function article()
     {
         return $this->belongsTo(Article::class);

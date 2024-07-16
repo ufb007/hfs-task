@@ -19,19 +19,11 @@ class ArticleController extends Controller
 
     public function show(Request $request, Article $article)
     {
-        $token = $request->attributes->get('token');
-
         return response()->json((new ArticleResource($article))->withComments());
     }
 
     public function store(CreateArticleRequest $request)
     {
-        $validate = $request->validated();
-
-        if (intval($validate['user_id']) !== Auth::id()) {
-            return response()->json(['error' => 'Unauthorized.'], 403);
-        }
-
         $newArticle = $this->articleRepository->create($request->validated());
 
         return response()->json([
@@ -46,5 +38,15 @@ class ArticleController extends Controller
         $this->articleRepository->update($article, $request->validated());
         
         return response()->json($article);
+    }
+
+    public function destroy(Article $article)
+    {
+        Gate::authorize('delete', $article);
+        $this->articleRepository->delete($article);
+        
+        return response()->json([
+            'message' => 'Article deleted successfully',
+        ]);
     }
 }

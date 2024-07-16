@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreateCommentRequest extends FormRequest
 {
@@ -14,6 +15,13 @@ class CreateCommentRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => Auth::id(),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +31,7 @@ class CreateCommentRequest extends FormRequest
     {
         return [
             'article_id' => 'sometimes',
-            'user_id' => 'required',
+            'user_id' => 'required|exists:users,id',
             'parent_id' => 'sometimes',
             'content' => 'required|string',
         ];

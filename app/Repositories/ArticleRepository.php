@@ -16,4 +16,9 @@ class ArticleRepository
         $article->fill($data)->save();
         return $article;
     }
+
+    public function delete(Article $article): bool
+    {
+        return $article->delete();
+    }
 }
