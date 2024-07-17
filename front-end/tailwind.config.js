@@ -74,6 +74,9 @@ module.exports = {
         "140-px": "140px",
         "48": "12rem",
       },
+      marginTop: {
+        "300-px": "300px",
+      },
       backgroundSize: {
         full: "100%",
       },

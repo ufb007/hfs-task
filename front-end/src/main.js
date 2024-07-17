@@ -14,6 +14,8 @@ import App from "@/App.vue";
 import Topics from "@/layouts/Topics.vue";
 
 import Categories from "@/views/topics/Categories.vue";
+import Articles from "@/views/topics/Articles.vue";
+import Article from "@/views/topics/Article.vue";
 
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
@@ -84,6 +86,14 @@ const routes = [
       {
         path: '/topics/categories',
         component: Categories
+      },
+      {
+        path: '/topics/category/:id/articles',
+        component: Articles
+      },
+      {
+        path: '/topics/article/:slug',
+        component: Article
       }
     ]
   },
@@ -97,7 +107,7 @@ const routes = [
   },
   {
     path: "/",
-    component: Index,
+    redirect: "/topics/categories"
   },
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];

@@ -7,11 +7,10 @@
       class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
     >
       <!-- Brand -->
-      <a
-        class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+      <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
         href="javascript:void(0)"
       >
-        FORUMS
+        TOPICS
       </a>
       <!-- Form -->
       <form
