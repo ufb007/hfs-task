@@ -22,12 +22,6 @@
   <!-- End Navbar -->
 </template>
 
-<script>
-import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
-
-export default {
-  components: {
-    UserDropdown,
-  },
-};
+<script setup>
+  import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
 </script>

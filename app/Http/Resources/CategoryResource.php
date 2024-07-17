@@ -37,7 +37,7 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'created_at' => $this->created_at->diffForHumans(),
-            'articles' => ArticleResource::collection($this->whenLoaded('articles')),
+            'articles' => ArticleResource::collection($this->orderedArticles),
         ];
     }
 }

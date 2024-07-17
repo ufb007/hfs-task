@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-wrap mt-4">
+    <router-link tag="p" :to="`/topics/category/${id}/create-article`" class="create-new text-white pl-4 pb-4 cursor-pointer">Create new article</router-link>
     <div class="w-full mb-12 px-4">
         <card-articles :articles="category.articles" :title="category.name" />
     </div>
@@ -31,3 +32,13 @@
         fetchData();
     })
 </script>
+
+<style scoped>
+    .create-new {
+        z-index: 100;    
+    }
+
+    .create-new:hover {
+        text-decoration: underline;
+    }
+</style>

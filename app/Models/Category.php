@@ -33,4 +33,9 @@ class Category extends Model
     {
         return $this->hasMany(Article::class);
     }
+
+    public function orderedArticles($orderBy = 'created_at', $order = 'desc')
+    {
+        return $this->articles()->orderBy($orderBy, $order);
+    }
 }

@@ -29,7 +29,7 @@ class ArticleController extends Controller
         return response()->json([
             'message' => 'Article created successfully',
             'article' => ArticleResource::collection(new Collection([$newArticle]))
-        ]);
+        ], 201);
     }
 
     public function update(UpdateArticleRequest $request, Article $article)

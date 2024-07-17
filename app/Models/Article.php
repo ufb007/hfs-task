@@ -34,6 +34,11 @@ class Article extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function orderedComments($orderBy = 'created_at', $order = 'desc')
+    {
+        return $this->comments()->orderBy($orderBy, $order);
+    }
+
     public function votes()
     {
         return $this->hasMany(Vote::class);

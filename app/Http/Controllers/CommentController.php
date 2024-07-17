@@ -24,7 +24,7 @@ class CommentController extends Controller
         return response()->json([
             'message' => 'Comment created successfully',
             'comment' => CommentResource::collection(new Collection([$newComment]))
-        ]);
+        ], 201);
     }
 
     public function update(UpdateCommentRequest $request, Comment $comment)

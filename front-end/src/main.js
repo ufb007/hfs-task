@@ -5,6 +5,7 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
+import "@/assets/styles/index.css";
 
 // mouting point for the whole app
 import App from "@/App.vue";
@@ -15,6 +16,7 @@ import Topics from "@/layouts/Topics.vue";
 import Categories from "@/views/topics/Categories.vue";
 import Articles from "@/views/topics/Articles.vue";
 import Article from "@/views/topics/Article.vue";
+import CreateArticle from "@/views/topics/CreateArticle.vue";
 
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
@@ -69,6 +71,10 @@ const routes = [
       {
         path: '/topics/article/:slug',
         component: Article
+      },
+      {
+        path: '/topics/category/:id/create-article',
+        component: CreateArticle
       }
     ]
   },

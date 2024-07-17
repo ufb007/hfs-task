@@ -23,6 +23,7 @@ class ArticleResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'votes' => $this->votes->count(),
+            'created_at' => $this->created_at->diffForHumans(),
             'comments_count' => $this->comments->count(),
         ];
     }
@@ -37,9 +38,10 @@ class ArticleResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'content' => $this->content,
+            'created_at' => $this->created_at->diffForHumans(),
             'votes_up' => $this->votes->filter(fn ($vote) => $vote->vote === 'up')->count(),
             'votes_down' => $this->votes->filter(fn ($vote) => $vote->vote === 'down')->count(),
-            'comments' => CommentResource::collection($this->whenLoaded('comments')),
+            'comments' => CommentResource::collection($this->orderedComments),
         ];
     }
 }
