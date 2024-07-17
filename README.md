@@ -52,6 +52,12 @@ or
 ./vender/bin/sail up -d
 ```
 
+The backend API runs on the port `8081`
+
+```
+http://localhost:8081
+```
+
 This may take a little while as it installs the docker images and sets up server containers for Backend, Frontend and the MySQL server. This will also start up the front end service (npm run serve) within the container.
 
 ### Access application from browser
