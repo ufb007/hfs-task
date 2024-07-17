@@ -96,6 +96,11 @@
             </form>
           </div>
         </div>
+        <div class="flex flex-wrap mt-6 relative">
+          <router-link to="/auth/login" class="text-blueGray-200">
+            <small>Back to login</small>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -134,7 +139,7 @@
 
     try {
       const { status, data } = await axios.post("/users", form.value);
-      
+
       if (status === 201) {
         sessionStorage.setItem('token', data.token);
         window.location.href = "/topics/categories";
