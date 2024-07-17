@@ -102,11 +102,9 @@
     }
 
     try {
-      console.log(form.value)
       const { data } = await axios.post("/authenticate", form.value);
       sessionStorage.setItem('token', data.token);
-
-      console.log('Form submitted with:', data);
+      window.location.href = "/topics/categories";
     } catch (error) {
       console.log(error.response.data.message);
     }
