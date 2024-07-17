@@ -4,8 +4,7 @@
       class="text-blueGray-500 block"
       href="#pablo"
       ref="btnDropdownRef"
-      v-on:click="toggleDropdown($event)"
-    >
+      v-on:click="toggleDropdown($event)">
       <div class="items-center flex">
         <span
           class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"
@@ -25,53 +24,65 @@
         hidden: !dropdownPopoverShow,
         block: dropdownPopoverShow,
       }">
-      <router-link
-        to="/auth/login"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Login
-      </router-link>
-      <router-link
-        to="/auth/register"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Register
-      </router-link>
-      <!-- <div class="h-0 my-2 border border-solid border-blueGray-100" />
-      <a
-        href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Seprated link
-      </a> -->
+      <div v-if="!loggedIn">
+        <router-link
+          to="/auth/login"
+          class="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+          Login
+        </router-link>
+        <router-link
+          to="/auth/register"
+          class="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+          Register
+        </router-link>
+      </div>
+
+      <div v-if="loggedIn">
+        <router-link
+          to="/user/profile"
+          class="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+          Profile
+        </router-link>
+        <div class="h-0 my-2 border border-solid border-blueGray-100" />
+        <router-link
+          to="/auth/logout"
+          class="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+          Logout
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-import { createPopper } from "@popperjs/core";
+<script setup>
+  import { createPopper } from "@popperjs/core";
+  import { ref, onMounted } from "vue";
 
-import image from "@/assets/img/ph_user-circle-fill.jpg";
+  import image from "@/assets/img/ph_user-circle-fill.jpg";
 
-export default {
-  data() {
-    return {
-      dropdownPopoverShow: false,
-      image: image,
-    };
-  },
-  methods: {
-    toggleDropdown: function (event) {
-      event.preventDefault();
-      if (this.dropdownPopoverShow) {
-        this.dropdownPopoverShow = false;
-      } else {
-        this.dropdownPopoverShow = true;
-        createPopper(this.$refs.btnDropdownRef, this.$refs.popoverDropdownRef, {
-          placement: "bottom-start",
-        });
-      }
-    },
-  },
-};
+  const loggedIn = ref(false);
+
+  const dropdownPopoverShow = ref(false);
+  const popoverDropdownRef = ref(false);
+  const btnDropdownRef = ref(false);
+
+  const toggleDropdown = (event) => {
+    event.preventDefault();
+
+    if (dropdownPopoverShow.value) {
+      dropdownPopoverShow.value = false;
+    } else {
+      dropdownPopoverShow.value = true;
+      
+      createPopper(btnDropdownRef.value, popoverDropdownRef.value, {
+        placement: "bottom-start",
+      });
+    }
+  }
+
+  onMounted(() => {
+    if (sessionStorage.getItem('token')) {
+      loggedIn.value = true;
+    }
+  });
 </script>
