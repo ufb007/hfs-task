@@ -32,6 +32,7 @@ class ArticleResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'user_name' => User::find($this->user_id)->name,
             'category_id' => $this->category_id,
             'title' => $this->title,
             'slug' => $this->slug,

@@ -11,22 +11,18 @@
                 </div>
               </div>
               <div class="text-left mt-10">
-                <h3 class="text-3xl font-semibold leading-normal mb-2 text-center text-blueGray-700" v-html="article.title"></h3>
+                <span class="text-sm text-blueGray-400" v-html="`Posted by: ${article.user_name}`"></span>
+                <h3 class="text-3xl font-semibold leading-normal mb-2 text-left text-blueGray-700 mt-5" v-html="article.title"></h3>
                 <div class="content mb-2 text-blueGray-600 mt-10" v-html="article.content"></div>
               </div>
+              <font-awesome-icon :icon="['fas', 'coffee']" />
               <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
                 <div class="text-left">
                   <span class="text-sm text-blueGray-400" v-html="`${comments.length} Comments`"></span>
                   
-                  <div class="w-full">
-                    <span class="text-sm text-blueGray-400">Comments</span>
-                    <p class="my-4 text-lg leading-relaxed text-blueGray-700">
-                      An artist of considerable range, Jenna the name taken by
-                      Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                      performs and records all of his own music, giving it a
-                      warm, intimate feel with a solid groove structure. An
-                      artist of considerable range.
-                    </p>
+                  <div class="w-full mt-3" v-for="comment in comments" :key="comment.id">
+                    <span class="text-sm text-blueGray-400">Comment by {{ comment.user_name }}</span>
+                    <Comments :comment="comment" />
                   </div>
 
                 </div>
@@ -42,6 +38,8 @@
     import { onMounted, ref } from "vue";
     import { useRoute } from "vue-router";
     import axios from "@/libs/axios";
+    import Comments from '@/components/Comment.vue';
+
     const { params: { slug: routeSlug } } = useRoute();
 
     const article = ref([]);
