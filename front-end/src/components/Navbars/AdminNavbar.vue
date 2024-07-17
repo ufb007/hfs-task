@@ -7,11 +7,12 @@
       class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
     >
       <!-- Brand -->
-      <a class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
-        href="javascript:void(0)"
-      >
+       <router-link
+        to="/"
+        class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+       >
         TOPICS
-      </a>
+       </router-link>
       <!-- User -->
       <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
         <user-dropdown />
