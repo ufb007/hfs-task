@@ -24,33 +24,26 @@
       v-bind:class="{
         hidden: !dropdownPopoverShow,
         block: dropdownPopoverShow,
-      }"
-    >
-      <a
-        href="javascript:void(0);"
+      }">
+      <router-link
+        to="/auth/login"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
-        Action
-      </a>
-      <a
-        href="javascript:void(0);"
+        Login
+      </router-link>
+      <router-link
+        to="/auth/register"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
-        Another action
-      </a>
-      <a
-        href="javascript:void(0);"
-        class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-      >
-        Something else here
-      </a>
-      <div class="h-0 my-2 border border-solid border-blueGray-100" />
+        Register
+      </router-link>
+      <!-- <div class="h-0 my-2 border border-solid border-blueGray-100" />
       <a
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
         Seprated link
-      </a>
+      </a> -->
     </div>
   </div>
 </template>
@@ -58,7 +51,7 @@
 <script>
 import { createPopper } from "@popperjs/core";
 
-import image from "@/assets/img/team-1-800x800.jpg";
+import image from "@/assets/img/ph_user-circle-fill.jpg";
 
 export default {
   data() {
