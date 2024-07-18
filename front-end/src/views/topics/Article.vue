@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-    import { onMounted, ref, computed } from "vue";
+    import { onMounted, ref, computed, inject } from "vue";
     import { useRoute } from "vue-router";
     import axios from "@/libs/axios";
     import Comments from '@/components/Comment.vue';
@@ -75,6 +75,8 @@
     }));
 
     const v$ = useVuelidate(rules, form);
+
+    const Swal = inject("$swal");
 
     const submitNewComment = async() => {
         if (v$.value.$invalid) {
