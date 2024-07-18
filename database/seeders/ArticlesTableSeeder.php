@@ -35,7 +35,7 @@ class ArticlesTableSeeder extends Seeder
                 <p>As AI advances, ethical concerns arise regarding privacy, bias in algorithms, and the impact on jobs. Responsible AI development includes ensuring transparency, fairness, and accountability in AI systems.</p>
                 <p>Future Trends</p>
                 <p>The future of AI holds promise in areas like healthcare diagnostics, personalized learning, and autonomous systems. Continued research and ethical guidelines will shape the evolution of AI, impacting societies globally.</p>
-                <p>In conclusion, Artificial Intelligence is revolutionizing industries and enhancing human capabilities, yet it necessitates thoughtful consideration of its societal implications and ethical frameworks.</p>;',
+                <p>In conclusion, Artificial Intelligence is revolutionizing industries and enhancing human capabilities, yet it necessitates thoughtful consideration of its societal implications and ethical frameworks.</p>',
             ]
         ];
 
