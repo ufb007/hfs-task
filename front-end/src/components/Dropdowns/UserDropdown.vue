@@ -57,6 +57,7 @@
 <script setup>
   import { createPopper } from "@popperjs/core";
   import { ref, onMounted } from "vue";
+  import axios from "@/libs/axios";
 
   import image from "@/assets/img/ph_user-circle-fill.jpg";
 
@@ -80,9 +81,13 @@
     }
   }
 
-  const logout = () => {
-    sessionStorage.removeItem('token');
-    loggedIn.value = false;
+  const logout = async () => {
+    const { status } = await axios.post("/users/logout");
+
+    if (status === 200) {
+      sessionStorage.removeItem('token');
+      loggedIn.value = false; 
+    }
   }
 
   onMounted(() => {

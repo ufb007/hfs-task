@@ -21,6 +21,7 @@ Route::get('/article/{article:slug}', [ArticleController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'currentUser']);
     Route::put('/users/{user}', [UserController::class, 'update'])->name('api.users.update');
+    Route::post('/users/logout', [UserController::class, 'logout'])->name('api.users.logout');
     Route::post('/articles', [ArticleController::class, 'store']);
     Route::put('/articles/{article}', [ArticleController::class, 'update']);
     Route::delete('/articles/{article}', [ArticleController::class, 'destroy']);

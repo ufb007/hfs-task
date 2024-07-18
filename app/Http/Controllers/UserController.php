@@ -22,6 +22,17 @@ class UserController extends Controller
         return response()->json(new UserResource(Auth::user()), 200);
     }
 
+    public function logout(Request $request)
+    {
+        try {
+            $request->user()->currentAccessToken()->delete();
+
+            return response()->json(['message' => 'User logged out successfully'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 500);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
