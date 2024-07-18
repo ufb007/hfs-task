@@ -21,19 +21,6 @@ Navigate to folder and in command line:
 composer install
 ```
 
-#### Migrate database
-Run command to migrate the database from the document root. This would need to be done using Laravel Artisan Sail method.
-
-```
-./vender/bin/sail artisan migrate
-```
-
-#### Seed Database
-Many ready made examples that will be available to view.
-```
-./vender/bin/sail artisan db:seed
-```
-
 ### Install Node packages
 Go into the folder `/front-end` and run the `npm install` command.
 ```
@@ -44,10 +31,6 @@ npm install
 
 One command to do it all (detached mode activated).
 
-```
-docker-compose up -d
-```
-or
 ```
 ./vender/bin/sail up -d
 ```
@@ -65,6 +48,19 @@ This opens up port `3000`;
 
 ```
 http://localhost:3000
+```
+
+#### Migrate database
+Run command to migrate the database from the document root. This would need to be done using Laravel Artisan Sail method.
+
+```
+./vender/bin/sail artisan migrate
+```
+
+#### Seed Database
+Many ready made examples that will be available to view.
+```
+./vender/bin/sail artisan db:seed
 ```
 
 You should be directed to the page `http://localhost:3000/topics/categories`.
