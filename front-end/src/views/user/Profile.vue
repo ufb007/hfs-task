@@ -17,7 +17,6 @@
       const { status, data } = await axios.get("/user");
 
       if (status === 200) {
-        console.log(data);
         user.value = data
       }
     });

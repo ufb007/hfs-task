@@ -36,6 +36,7 @@
                 v-model="form.email"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               />
+              <span class="text-red-500 text-sm" v-if="v$.email.email.$invalid">Email must be valid</span>
             </div>
           </div>
           <div class="w-full lg:w-6/12 px-4">
@@ -56,6 +57,8 @@
         <button 
             class="bg-emerald-500 mt-5 active:bg-emerald-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" 
             type="button"
+            v-on:click="submit()"
+            :disabled="v$.$invalid"
             >Update
         </button>
       </form>
@@ -64,8 +67,10 @@
 </template>
 
 <script setup>
-  import { defineProps, ref, toRefs } from "vue";
+  import { defineProps, onMounted, ref, watch, inject, computed } from "vue";
   import axios from "@/libs/axios";
+  import useVuelidate from "@vuelidate/core";
+  import { email, minLength } from "@vuelidate/validators";
 
   const props = defineProps({
     user: {
@@ -73,13 +78,55 @@
     },
   });
 
-  const { user } = toRefs(props);
+  const Swal = inject("$swal");
 
   const form = ref({
-    name: user.value?.name,
-    email: user.value?.email,
-    password: "",
+    name: null,
+    email: null,
+    password: null,
   });
 
-  console.log(user.value?.name)
+  const rules = computed(() => ({
+    email: { email },
+    password: { minLength: minLength(8) },
+  }));
+
+  const v$ = useVuelidate(rules, form);
+
+  watch(() => props.user, (newUser) => {
+      form.value.name = newUser?.name || null;
+      form.value.email = newUser?.email || null;
+    },
+    { immediate: true }
+  );
+
+  const submit = async () => {
+    if (v$.value.$invalid) {
+      v$.value.$touch();
+      return;
+    }
+
+    let formData = {};
+
+    Object.keys(form.value).forEach((key) => {
+      if (form.value[key] !== null) {
+        formData[key] = form.value[key];
+      }
+    });
+
+    try {
+      const { status, data } = await axios.put(`/users/${props.user?.id}`, formData);
+
+      if (status === 200) {
+        Swal({
+          title: 'Success!',
+          text: 'Profile data has been updated',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 </script>
