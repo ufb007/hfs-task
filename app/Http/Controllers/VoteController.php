@@ -19,14 +19,15 @@ class VoteController extends Controller
 
     public function store(CreateVoteRequest $request)
     {
-        $validate = $request->validated();
-
-        if (intval($validate['user_id']) !== Auth::id()) {
-            return response()->json(['error' => 'Unauthorized.'], 403);
-        }
-
         $message = $this->voteService->createUpdateDelete($request->all());
+        $votes = Vote::where('article_id', $request->article_id)->get();
 
-        return response()->json(['message' => $message]);
+        return response()->json([
+            'message' => $message,
+            'votes' => [
+                'up' => $votes->where('vote', 'up')->count(),
+                'down' => $votes->where('vote', 'down')->count()
+            ]
+        ], 200);
     }
 }

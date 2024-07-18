@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateVoteRequest extends FormRequest
 {
@@ -14,6 +15,13 @@ class UpdateVoteRequest extends FormRequest
         return false;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => Auth::id(),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,6 +30,7 @@ class UpdateVoteRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'user_id' => 'required|exists:users,id',
             'vote' => 'required|in:up,down'
         ];
     }

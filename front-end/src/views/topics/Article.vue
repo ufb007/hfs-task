@@ -11,7 +11,13 @@
                 </div>
               </div>
               <div class="text-left mt-10">
-                <span class="text-sm text-blueGray-400">Posted by: {{ article.user?.name }}</span>
+                <div class="flex justify-between">
+                    <span class="text-sm text-blueGray-400">Posted by: {{ article.user?.name }}</span>
+                    <div>
+                        <div class="upVote"><i @click="vote('up')" class="fas fa-thumbs-up"></i>{{ article.votes_up }}</div>
+                        <div class="downVote"><i @click="vote('down')" class="fas fa-thumbs-down"></i>{{ article.votes_down }}</div>
+                    </div>
+                </div>
                 <h3 class="text-3xl font-semibold leading-normal mb-2 text-left text-blueGray-700 mt-5">{{ article.title }}</h3>
                 <div class="content mb-2 text-blueGray-600 mt-10" v-html="article.content"></div>
               </div>
@@ -94,7 +100,23 @@
                 comments.value.unshift(...data.comment);
                 form.value.comment = "";
                 console.log(comments.value);
-            }            
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const vote = async(type) => {
+        try {
+            const { status, data } = await axios.post(`/votes`, {
+                article_id: article.value.id,
+                vote: type
+            });
+
+            if (status === 200) {
+                article.value.votes_up = data.votes.up
+                article.value.votes_down = data.votes.down
+            }
         } catch (error) {
             console.error(error);
         }
@@ -127,5 +149,20 @@
 
     .content p {
         padding-bottom: 20px !important;
+    }
+
+    .upVote {
+        margin-right: 20px;
+    }
+
+    .upVote,
+    .downVote {
+        cursor: pointer;
+        float: left;
+    }
+
+    .upVote i,
+    .downVote i {
+        padding-right: 10px;
     }
 </style>
