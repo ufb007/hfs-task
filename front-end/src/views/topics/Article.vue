@@ -11,8 +11,8 @@
                 </div>
               </div>
               <div class="text-left mt-10">
-                <span class="text-sm text-blueGray-400" v-html="`Posted by: ${article.user_name}`"></span>
-                <h3 class="text-3xl font-semibold leading-normal mb-2 text-left text-blueGray-700 mt-5" v-html="article.title"></h3>
+                <span class="text-sm text-blueGray-400">Posted by: {{ article.user?.name }}</span>
+                <h3 class="text-3xl font-semibold leading-normal mb-2 text-left text-blueGray-700 mt-5">{{ article.title }}</h3>
                 <div class="content mb-2 text-blueGray-600 mt-10" v-html="article.content"></div>
               </div>
               <div 
@@ -37,7 +37,7 @@
               </div>
               <div class="py-5 border-t border-blueGray-200 text-center">
                 <div class="text-left">
-                  <span class="text-sm text-blueGray-400" v-html="`${comments.length} Comments`"></span>
+                  <span class="text-sm text-blueGray-400">{{ comments.length }} Comments</span>
                   <div class="w-full mt-3" v-for="comment in comments" :key="comment.id">
                     <span class="text-sm text-blueGray-400">Comment by {{ comment.user_name }}</span>
                     <Comments :comment="comment" />

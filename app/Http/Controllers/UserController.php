@@ -17,6 +17,11 @@ class UserController extends Controller
     public function __construct(protected UserRepository $userRepository)
     {}
 
+    public function currentUser()
+    {
+        return response()->json(new UserResource(Auth::user()), 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

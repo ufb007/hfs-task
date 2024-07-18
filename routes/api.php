@@ -19,6 +19,7 @@ Route::get('/category/{category}', [CategoryController::class, 'index']);
 Route::get('/article/{article:slug}', [ArticleController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [UserController::class, 'currentUser']);
     Route::put('/users/{user}', [UserController::class, 'update'])->name('api.users.update');
     Route::post('/articles', [ArticleController::class, 'store']);
     Route::put('/articles/{article}', [ArticleController::class, 'update']);
