@@ -22,7 +22,7 @@ class CommentResource extends JsonResource
             'user_name' => $this->user->name,
             'content' => $this->content,
             'parent_id' => $this->parent_id,
-            'replies' => CommentResource::collection($this->whenLoaded('replies')),
+            'replies' => CommentResource::collection($this->orderedReplies),
             'created_at' => $this->created_at->diffForHumans(),
         ];
     }

@@ -125,6 +125,8 @@
                         text: 'Comment has been deleted',
                         icon: 'success',
                         confirmButtonText: 'OK',
+                    }).then(() => {
+                        location.reload();
                     });
                 });
             }

@@ -31,4 +31,9 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id');
     }
+
+    public function orderedReplies()
+    {
+        return $this->replies()->orderBy('created_at', 'desc');
+    }
 }
