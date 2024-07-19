@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, ref } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 
 // styles
@@ -20,6 +20,7 @@ import Categories from "@/views/topics/Categories.vue";
 import Articles from "@/views/topics/Articles.vue";
 import Article from "@/views/topics/Article.vue";
 import CreateArticle from "@/views/topics/CreateArticle.vue";
+import EditArticle from "@/views/topics/EditArticle.vue";
 
 import Admin from "@/layouts/Admin.vue";
 import Auth from "@/layouts/Auth.vue";
@@ -90,9 +91,13 @@ const routes = [
         component: Article
       },
       {
+        path: '/topics/aticle/:slug/edit-article',
+        component: EditArticle
+      },
+      {
         path: '/topics/category/:id/create-article',
         component: CreateArticle
-      }
+      },
     ]
   },
   {
@@ -114,10 +119,29 @@ router.beforeEach((to, from, next) => {
     next('/topics/categories');
   }
 
+  if (to.path.includes('profile') && !sessionToken) {
+    next('/auth/login');
+  }
+
   next();
 });
 
-createApp(App)
-  .use(router)
-  .use(VueSweetalert2)
-  .mount("#app");
+const app = createApp(App);
+
+const globalState = {
+  loggedIn: ref(false)
+};
+
+globalState.loggedIn.value = sessionStorage.getItem('token') ? true : false;
+
+app.config.globalProperties.$globalState = globalState;
+
+app.config.globalProperties.setLoggedIn = () => {
+  const value = sessionStorage.getItem('token') ? true : false;
+
+  globalState.loggedIn.value = value;
+};
+
+app.use(router)
+   .use(VueSweetalert2)
+   .mount("#app");

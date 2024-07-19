@@ -7,6 +7,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -17,6 +18,9 @@ class CategoryController extends Controller
     {
         $token = $request->attributes->get('token');
 
-        return response()->json((new CategoryResource($category))->withArticles());
+        return response()->json([
+            'user' => Auth::user(),
+            'category' => (new CategoryResource($category))->withArticles()
+        ], 200);
     }
 }

@@ -17,7 +17,6 @@ class ArticleResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_name' => User::find($this->user_id)->name,
             'user' => [
                 'id' => $this->user->id, 
                 'name' => $this->user->name, 
@@ -36,7 +35,6 @@ class ArticleResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_name' => User::find($this->user_id)->name,
             'user' => [
                 'id' => $this->user->id, 
                 'name' => $this->user->name, 

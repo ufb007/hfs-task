@@ -1,27 +1,43 @@
 <template>
     <div>
-        <p class="text-sm text-blueGray-400" v-html="`Replied by: ${reply.user_name}`"></p>
-        <p class="my-4 text-lg leading-relaxed text-blueGray-700 flex justify-between items-center">
+        <p class="text-sm text-blueGray-400" v-html="`Replied by: ${reply.user_name} : ${reply.created_at}`"></p>
+        <p class="replyToComment my-4 text-lg leading-relaxed text-blueGray-700 flex justify-between items-center">
             {{ reply.content }}
-            <span @click="replyToComment(reply.user_name, reply.id)" class="replyToComment text-sm text-blueGray-400 cursor-pointer">Reply to comment</span>
+            <p v-if="isLoggedIn" class="replyToComment text-sm text-blueGray-400 cursor-pointer">
+                <span v-if="isLoggedIn" @click="replyToComment(reply.user_name, reply.id)" class="replyToComment text-sm text-blueGray-400 cursor-pointer">Reply to comment</span>
+                <span v-if="reply.user_id === user.id"> | </span> 
+                <span @click="editReply(reply.id, reply.content)" class="replyToComment text-sm text-blueGray-400 cursor-pointer" v-if="reply.user_id === user.id">Edit</span>
+                <span v-if="reply.user_id === user.id"> | </span> 
+                <span v-if="reply.user_id === user.id">Delete</span>
+            </p>
         </p>
 
         <div class="nested-comments" v-if="reply.replies && reply.replies.length">
-            <reply v-for="nestedReply in reply.replies" :key="nestedReply.id" :reply="nestedReply" />
+            <reply v-for="nestedReply in reply.replies" :key="nestedReply.id" :reply="nestedReply" :user="user" />
         </div>
     </div>
 </template>
 
 <script setup>
-    import { defineProps, inject } from "vue";
+    import { defineProps, inject, computed, defineEmit } from "vue";
     import axios from "@/libs/axios";
+    import { useGlobalState } from '@/libs/state';
+
+    const { loggedIn } = useGlobalState();
 
     const props = defineProps({
        reply: {
             type: Object,
             required: true
+       },
+       user: {
+            type: Object || null,
+            required: true
        }
     });
+
+    const isLoggedIn = computed(() => loggedIn.value);
+    const emit = defineEmit(['update-reply']);
 
     const Swal = inject("$swal");
 
@@ -53,6 +69,40 @@
                         confirmButtonText: 'OK',
                     }).then(() => {
                         location.reload();
+                    });
+                }
+            }
+        })
+    }
+
+    const editReply = (replyId, content) => {
+        Swal({
+            inputLabel: 'Edit reply',
+            input: 'text',
+            showCancelButton: true,
+            inputValue: content,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Field is empty!';
+                }
+                return null;
+            }
+        }).then(async (value) => {
+            if (value.isConfirmed) {
+                const formData = {
+                    content: value.value
+                }
+
+                const { status, data } = await axios.put(`/comments/${replyId}`, formData);
+
+                if (status === 200) {
+                    emit('update-reply', replyId, value.value);
+
+                    Swal({
+                        title: 'Success!',
+                        text: 'Reply has been updated',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
                     });
                 }
             }

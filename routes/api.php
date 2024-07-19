@@ -7,16 +7,19 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoteController;
+use App\Http\Middleware\CheckActiveLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('api.authenticate');
 
-Route::post('/users', [UserController::class, 'store'])->name('api.users.store');
-Route::get('/topics', [TopicController::class, 'index'])->name('api.topics');
-Route::get('/category/{category}', [CategoryController::class, 'index']);
-Route::get('/article/{article:slug}', [ArticleController::class, 'show']);
+Route::middleware(CheckActiveLogin::class)->group(function () {
+    Route::post('/users', [UserController::class, 'store'])->name('api.users.store');
+    Route::get('/topics', [TopicController::class, 'index'])->name('api.topics');
+    Route::get('/category/{category}', [CategoryController::class, 'index']);
+    Route::get('/article/{article:slug}', [ArticleController::class, 'show']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'currentUser']);

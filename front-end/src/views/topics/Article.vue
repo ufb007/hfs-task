@@ -11,8 +11,12 @@
                 </div>
               </div>
               <div class="text-left mt-10">
+                <router-link v-if="isLoggedIn && article.user?.id === user.id" :to="`/topics/aticle/${article.slug}/edit-article`" tag="div" class="edit-button mb-5 text-md text-blueGray-400 cursor-pointer">
+                    <i class="fa fa-pencil-alt"></i>
+                    Edit Article
+                </router-link>
                 <div class="flex justify-between">
-                    <span class="text-sm text-blueGray-400">Posted by: {{ article.user?.name }}</span>
+                    <span class="text-sm text-blueGray-400">Posted {{ article.created_at }} by: {{ article.user?.name }}</span>
                     <div>
                         <div class="upVote"><i @click="vote('up')" class="fas fa-thumbs-up"></i>{{ article.votes_up }}</div>
                         <div class="downVote"><i @click="vote('down')" class="fas fa-thumbs-down"></i>{{ article.votes_down }}</div>
@@ -22,7 +26,7 @@
                 <div class="content mb-2 text-blueGray-600 mt-10" v-html="article.content"></div>
               </div>
               <div 
-                v-if="loggedIn"
+                v-if="isLoggedIn"
                 class="py-10 border-t border-blueGray-200 text-start">
                 <form>
                     <p class="text-sm text-blueGray-400 mb-5">Comment:</p>
@@ -45,8 +49,13 @@
                 <div class="text-left">
                   <span class="text-sm text-blueGray-400">{{ comments.length }} Comments</span>
                   <div class="w-full mt-3" v-for="comment in comments" :key="comment.id">
-                    <span class="text-sm text-blueGray-400">Comment by {{ comment.user_name }}</span>
-                    <Comments :comment="comment" />
+                    <span class="text-sm text-blueGray-400">Comment by {{ comment.user_name }}: {{ comment.created_at }}</span>
+                    <Comments 
+                        :comment="comment" 
+                        :user="user" 
+                        @update-comment="updateComment"
+                        @update-reply="updateReply"
+                     />
                   </div>
                 </div>
               </div>
@@ -64,13 +73,17 @@
     import Comments from '@/components/Comment.vue';
     import useVuelidate from "@vuelidate/core";
     import { required, email } from "@vuelidate/validators";
+    import { useGlobalState } from '@/libs/state';
 
     const { params: { slug: routeSlug } } = useRoute();
 
-    const loggedIn = ref(false);
+    const { loggedIn } = useGlobalState();
+
+    const isLoggedIn = computed(() => loggedIn.value);
 
     const article = ref([]);
     const comments = ref([]);
+    const user = ref({});
 
     const form = ref({
         comment: ""
@@ -106,6 +119,24 @@
         }
     }
 
+    const updateComment = (comment, commentId) => {
+        comments.value.find(item => {
+            if (item.id === commentId) {
+                item.content = comment;
+            }
+        });
+    }
+
+    const updateReply = (replyId, content) => {
+        comments.value.forEach(comment => {
+           comment.replies.find(reply => {
+               if (reply.id === replyId) {
+                   reply.content = content;
+               }
+           });
+        });
+    }
+
     const vote = async(type) => {
         try {
             const { status, data } = await axios.post(`/votes`, {
@@ -126,8 +157,9 @@
         try {
             const response = await axios.get(`/article/${routeSlug}`);
 
-            article.value = response.data;
-            comments.value = response.data.comments;
+            user.value = response.data.user;
+            article.value = response.data.article;
+            comments.value = response.data.article.comments;
         } catch (error) {
             console.error(error);
         }
@@ -135,10 +167,6 @@
 
     onMounted(() => {
         fetchData();
-
-        if (sessionStorage.getItem('token')) {
-            loggedIn.value = true;
-        }
     });
 </script>
 
@@ -164,5 +192,14 @@
     .upVote i,
     .downVote i {
         padding-right: 10px;
+    }
+
+    .create-new {
+        z-index: 100;    
+    }
+
+    .edit-button:hover,
+    .create-new:hover {
+        text-decoration: underline;
     }
 </style>

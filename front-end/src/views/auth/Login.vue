@@ -14,7 +14,7 @@
             <hr class="mt-6 border-b-1 border-blueGray-300" />
           </div>
           <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-            <form @submit.prevent="submit()">
+            <form @submit.prevent="submit">
               <div class="relative w-full mb-3">
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -71,10 +71,13 @@
 </template>
 <script setup>
   import { computed } from "@vue/reactivity";
-  import { ref } from "vue";
+  import { ref, getCurrentInstance } from "vue";
   import axios from "@/libs/axios";
   import useVuelidate from "@vuelidate/core";
   import { required, email } from "@vuelidate/validators";
+  import { useGlobalState } from '@/libs/state';
+
+  const { setLoggedIn } = useGlobalState();
 
   const form = ref({
     email: "",
@@ -97,6 +100,8 @@
     try {
       const { data } = await axios.post("/authenticate", form.value);
       sessionStorage.setItem('token', data.token);
+      setLoggedIn();
+
       window.location.href = "/topics/categories";
     } catch (error) {
       console.log(error.response.data.message);

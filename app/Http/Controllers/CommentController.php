@@ -32,7 +32,7 @@ class CommentController extends Controller
         Gate::authorize('update', $comment);
         $this->commentRepository->update($comment, $request->all());
         
-        return response()->json($comment, 201);
+        return response()->json($comment, 200);
     }
 
     public function destroy(Comment $comment)

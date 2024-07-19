@@ -2,7 +2,7 @@
   <div class="flex flex-wrap mt-4">
     <router-link tag="p" :to="`/topics/category/${id}/create-article`" class="create-new text-white pl-4 pb-4 cursor-pointer">Create new article</router-link>
     <div class="w-full mb-12 px-4">
-        <card-articles :articles="category.articles" :title="category.name" />
+        <card-articles :articles="category.articles" :title="category.name" :user="user" />
     </div>
   </div>
 </template>
@@ -16,13 +16,18 @@
     const route = useRoute();
     const id = ref(route.params.id);
 
-    const category = ref([]);
+    const user = ref({});
+    const category = ref({});
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`/category/${id.value}`);
-            console.log(response.data)
-            category.value = response.data;
+            const { status, data } = await axios.get(`/category/${id.value}`);
+            console.log(data)
+
+            if (status === 200) {
+                user.value = data.user;
+                category.value = data.category;
+            }
         } catch (error) {
             console.error(error);
         }

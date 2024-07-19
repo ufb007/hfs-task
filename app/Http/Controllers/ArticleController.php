@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class ArticleController extends Controller
 {
@@ -19,7 +20,10 @@ class ArticleController extends Controller
 
     public function show(Request $request, Article $article)
     {
-        return response()->json((new ArticleResource($article))->withComments());
+        return response()->json([
+            'user' => Auth::user(),
+            'article' => (new ArticleResource($article))->withComments()
+        ]);
     }
 
     public function store(CreateArticleRequest $request)

@@ -24,7 +24,7 @@
         hidden: !dropdownPopoverShow,
         block: dropdownPopoverShow,
       }">
-      <div v-if="!loggedIn">
+      <div v-if="!isLoggedIn">
         <router-link
           to="/auth/login"
           class="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
@@ -56,12 +56,15 @@
 
 <script setup>
   import { createPopper } from "@popperjs/core";
-  import { ref, onMounted } from "vue";
+  import { ref, getCurrentInstance, computed } from "vue";
   import axios from "@/libs/axios";
+  import { useGlobalState } from '@/libs/state';
 
   import image from "@/assets/img/ph_user-circle-fill.jpg";
 
-  const loggedIn = ref(false);
+  const { loggedIn, setLoggedIn } = useGlobalState();
+
+  const isLoggedIn = computed(() => loggedIn.value);
 
   const dropdownPopoverShow = ref(false);
   const popoverDropdownRef = ref(false);
@@ -86,13 +89,8 @@
 
     if (status === 200) {
       sessionStorage.removeItem('token');
-      loggedIn.value = false; 
+
+      setLoggedIn();
     }
   }
-
-  onMounted(() => {
-    if (sessionStorage.getItem('token')) {
-      loggedIn.value = true;
-    }
-  });
 </script>
